@@ -147,6 +147,40 @@ While the final application will likely be launched via a desktop icon without m
 It is useful to refresh a bit about the main in C++, as Qt6 is a C++ library.
 For example, here is a nice short overview: https://www.ibm.com/docs/en/i/7.5.0?topic=functions-main-function
 
+#### 3.2.2 Layout Strategy
+- Main Window (QWidget)
+- Input Area (QWidget)
+- Scroll Area (QScrollArea) with Grid (QGridLayout) and Note Cards (QFrame  or QWidget)
 
+Some Qt separation of concerns: Widgets are the elements that we can see (the buttons, text boxes, and containers), while Layouts are the "glue" that positions them.
 
+So for my App:
 
+- Widget Concept (The Objects):
+QWidget: the main window and the individual note cards.
+QScrollArea: The specialized "viewing area" that allows the window to scroll when the list of notes gets too long.
+QLineEdit / QTextEdit: title and body input areas.
+
+- Layout Concept (The Positioning):
+QVBoxLayout: Stacks the "Input Area" directly on top of the "Scroll Area."
+QGridLayout: Manages the math of the 5-column grid for the note cards.
+
+#### 3.2.3 Vertical layout
+
+This YouTube tutorial helped me to get started: https://www.youtube.com/watch?v=Cc_zaUbF4LM&list=PLqF6vzpT2rGpNb7jx85qvDH9N337Tar0f&index=25
+The author uses QMainWindow() but for layout itself it doesn't matter for now
+
+For my app window I choosed a vertical layout, so that the elements are stacked.
+
+Imports for now: ```QVBoxLayout, QLineEdit, QTextEdit, QPushButton```
+
+Order of work:
+- define the layout:
+```layout = QVBoxLayout()```
+- create widgets and instantiate a specific Widget class
+in my case I use QLineEdit, QTextEdit, QPushButton
+- add widgets to layout, for example:
+```layout.addWidget(<widget_name>)```
+It's important that the widgets will appear on the window in same order they are added to layout, not in the order they defined.
+
+Example of a basic window with the title area, note text area and save button is in the vertical_layout.py. Run it ```python vertical_layout.py```
