@@ -1,4 +1,9 @@
 ## Notes App
+Scope: to build a simple Desktop note application, not dependent on browser.
+It needs to be very user-friendly, target audience is early teens.
+No HTML/CSS/JS here.
+
+## Building timeline 
 
 ### 1. Setup
 - create a virtual environment in the project directory (I work with Windows and VisualStudio):
@@ -33,7 +38,7 @@ it returns the path to the pyhton executable, in my case:
 
 when running it should open a window
 
-### Creating a DataBase with sqlite3
+### 2. Creating a DataBase with sqlite3
 - Database: SQLite
 - Language: Python
 - Database connection handled using context managers (with sqlite3.connect(...))
@@ -95,5 +100,53 @@ Initial crud tests are located in crud_tests.py, the script is executed by calli
 ```"SELECT ... WHERE id = ?"```
 - second argument should be a list or a tuple, so to pass one item as a tuple, we need to add a comma:
 ```cursor.execute("SELECT * FROM notes WHERE id = ?", (note_id,))```
+
+### 3. UI with PyQt
+Why PyQt?
+
+This is my first experience working with PyQt. My goal was to develop a browser-independent application, only desktop version. I found out that PyQt
+simplifies the process.
+
+- native window behavior, no need for browser engine;
+- single language stack - both backend and UI is built in Python;
+- easier database management, with less secuirity browser-related restrictions;
+- fast (in theory) GUI prototyping, detailed documentation and tutorials with code snippets to get you started are availiable (https://doc.qt.io/).
+
+Why it was difficult for me: I got lost in the endless list of Qt classes.
+
+### 3.1 GUI overview
+It's a note writing app, with basic CRUD functionality, so the main function is to add a new note. This is done by filling the "title" and "body" areas which are located on the upper part of the window. Bottom part contains all previously created notes, presented as small cards, 5 cards in a row. In case there are many notes the user can scroll the main window  down.
+
+Each note card is clickable and extends in a pop up and provides functionality for editind, saving changes, closing without saving, and a note deletion.
+
+### Applicaion Architecture
+
+This project uses PyQt to build a graphical interface. The framework provides different application classes depending on the project's needs:
+- QApplication (GUI): It initializes the window system and manages the visual theme.
+- QCoreApplication (Non-GUI): Used for background services or console tools that do not require a window.
+
+It is nicely described here, in PyQt docs: https://doc.qt.io/qt-6/qapplication.html#:~:text=It%20initializes%20the%20application%20with,the%20user%20interface%20are%20created.
+
+This project will have a GUI, so I use QApplication.
+
+Next question was to use QMainWindow or a QWidget.
+- QWidget is a parent class of every visible object in Qt (buttons, labels, windows).
+It has no built-in "spots" for standard desktop features. So like a blank canvas
+- QMainWindow is a specialized widget designed to be the "Main Window" of a professional desktop app. It has built-in spots, full description and code snippets  for building are here: https://doc.qt.io/qt-6/qmainwindow.html#:~:text=A%20main%20window%20provides%20a,image%20of%20the%20layout%20below.
+
+For my simple note app QWidget should be enough.
+
+### 3.2 GUI implementation
+
+#### 3.2.1 Initialization & Arguments
+The application is initialized using ```app = QApplication(sys.argv)```
+to do so we need to ```import sys```. This provides access to the interpreter's argument list, which is required by the underlying Qt engine to set up the environment.
+
+While the final application will likely be launched via a desktop icon without manual console input, I keep passing the system arguments list for automated testing and debugging during development.
+
+It is useful to refresh a bit about the main in C++, as Qt6 is a C++ library.
+For example, here is a nice short overview: https://www.ibm.com/docs/en/i/7.5.0?topic=functions-main-function
+
+
 
 
