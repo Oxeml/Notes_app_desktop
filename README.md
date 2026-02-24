@@ -184,3 +184,7 @@ in my case I use QLineEdit, QTextEdit, QPushButton
 It's important that the widgets will appear on the window in same order they are added to layout, not in the order they defined.
 
 Example of a basic window with the title area, note text area and save button is in the vertical_layout.py. Run it ```python vertical_layout.py```
+
+For several files code and for usage of
+```if __name__ == "__main__":```
+it's important to make sure that QWidget is used after the QApplication instance is constructed, so all widgets definitions which are outside ```if __name__ == "__main__":``` block should be wrapped in a class or a funtion. Please see an example in card_example.py
