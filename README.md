@@ -181,10 +181,21 @@ Order of work:
 in my case I use QLineEdit, QTextEdit, QPushButton
 - add widgets to layout, for example:
 ```layout.addWidget(<widget_name>)```
-It's important that the widgets will appear on the window in same order they are added to layout, not in the order they defined.
+The widgets will appear on the window in the same order they are added to the layout, not in the order they were defined.
 
 Example of a basic window with the title area, note text area and save button is in the vertical_layout.py. Run it ```python vertical_layout.py```
 
 For several files code and for usage of
 ```if __name__ == "__main__":```
 it's important to make sure that QWidget is used after the QApplication instance is constructed, so all widgets definitions which are outside ```if __name__ == "__main__":``` block should be wrapped in a class or a funtion. Please see an example in card_example.py
+
+#### 3.2.4. Signals and Slots
+Used to make a toggle mode for a card.
+Signals are notifications produced by a widget when something happens (like a button click).
+Slots are methods that are executed as a responce on a sygnal.
+
+Usage of ```Super()``` with ```__init__()```:
+https://www.geeksforgeeks.org/python/python-super-with-__init__-method/
+
+Usage of ```self```
+https://softwareengineering.stackexchange.com/questions/303082/why-do-you-need-self-in-python-to-refer-to-instance-variables
