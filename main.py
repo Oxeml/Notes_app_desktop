@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QPushButton,
 from PyQt6.QtCore import Qt
 import db
 from card import NoteCard
+from create_note import NewNote
 
 class NotebookApp (QWidget):
     def __init__(self):
@@ -61,7 +62,7 @@ class NotebookApp (QWidget):
 
 
     def open_new_note(self):
-        self.new_win = NoteCard()
+        self.new_win = NewNote()
         self.new_win.show()
 
 

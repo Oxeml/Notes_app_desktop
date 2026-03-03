@@ -1,4 +1,4 @@
-# practicing layout for my main window
+# spawn window for a new card
 
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLineEdit, QTextEdit
 import sys
