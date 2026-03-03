@@ -1,14 +1,22 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QTextEdit, QVBoxLayout, QHBoxLayout
+from PyQt6.QtCore import pyqtSignal
 import sys
+import db
 
 class NoteCard(QWidget):
+    # signal for notes update when saved
+    note_edited_saved = pyqtSignal()
+
+    # main logic of the Class
     #__init__() - is a Python class constructor
     # super().__init__() - to call a parent class' (QWidget) constructor
     # Python convention - to declare all variables in __init__
-    def __init__(self, title="New Note", body=""):
+    def __init__(self, title="New Note", body="", note_id=None):       
+        
         super().__init__()
         self.saved_title = title
         self.saved_body = body
+        self.note_id = note_id
 
         self.init_ui()
         self.set_view_mode() #default mode
@@ -71,6 +79,16 @@ class NoteCard(QWidget):
     def save_changes(self):
         self.saved_title = self.title_input.text()
         self.saved_body = self.body_input.toPlainText()
+
+        # save to the database
+        if self.saved_title.strip() == "" and self.saved_body.strip() == "":
+            return
+        
+        db.update_note(self.note_id, self.saved_title, self.saved_body)
+
+        # trigger a signal to update notes on the main window
+        self.note_edited_saved.emit()
+
         self.set_view_mode()
 
     # 3. Discard changes

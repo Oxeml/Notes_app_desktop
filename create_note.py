@@ -1,8 +1,13 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QTextEdit, QVBoxLayout, QHBoxLayout
+from PyQt6.QtCore import pyqtSignal
 import sys
 import db
 
 class NewNote(QWidget):
+    # defining a signal
+    note_saved = pyqtSignal()
+
+    # main logic for the Class
     def __init__(self):
         super().__init__()
         
@@ -49,6 +54,12 @@ class NewNote(QWidget):
             return
             
         db.add_note(t, b)
+
+        # trigger the signal to reload (update) all notes
+        # later in the main
+        self.note_saved.emit()
+
+        # close the window for a new note (by that time notes already updated)
         self.close()
 
 

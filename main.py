@@ -51,7 +51,7 @@ class NotebookApp (QWidget):
         for index, note in enumerate(notes):
             n_id, n_title, n_time = note
 
-            btn = QPushButton(f"{n_title}/n{n_time}")
+            btn = QPushButton(f"{n_title}\n{n_time}")
             btn.setFixedSize(130, 100)
             btn.clicked.connect(lambda checked, id=n_id: self.open_existing_note(id))
 
@@ -63,12 +63,19 @@ class NotebookApp (QWidget):
 
     def open_new_note(self):
         self.new_win = NewNote()
+
+        # usage of custom signal to update notes list
+        self.new_win.note_saved.connect(self.load_notes)
+
         self.new_win.show()
 
 
     def open_existing_note(self, note_id):
         data = db.get_note_by_id(note_id)
-        self.edit_win = NoteCard(title = data[1], body = data[2])
+        self.edit_win = NoteCard(title = data[1], body = data[2], note_id = data[0])
+        
+        #usage of custom signal to update notes list
+        self.edit_win.note_edited_saved.connect(self.load_notes)
         self.edit_win.show()
 
 
