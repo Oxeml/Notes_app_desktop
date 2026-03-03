@@ -199,3 +199,8 @@ https://www.geeksforgeeks.org/python/python-super-with-__init__-method/
 
 Usage of ```self```
 https://softwareengineering.stackexchange.com/questions/303082/why-do-you-need-self-in-python-to-refer-to-instance-variables
+
+Diff between ```setWidget()``` and ```addWidget()```:
+- ```setWidget()``` - plugs exactly one element to a specific layout (like ScrollArea or QDockWidget), replaces previous container
+
+- ```addWidget()``` - adds element at the end of the list of the elements that are already there
