@@ -6,6 +6,8 @@ import db
 class NoteCard(QWidget):
     # signal for notes update when saved
     note_edited_saved = pyqtSignal()
+    # signal for notes update after deleting a note
+    note_deleted = pyqtSignal()
 
     # main logic of the Class
     #__init__() - is a Python class constructor
@@ -35,8 +37,10 @@ class NoteCard(QWidget):
         self.view_widget = QWidget()
         view_layout = QHBoxLayout(self.view_widget)
         self.edit_btn = QPushButton("Edit")
+        self.delete_btn = QPushButton("Delete note")
         self.close_btn = QPushButton("Close")
         view_layout.addWidget(self.edit_btn)
+        view_layout.addWidget(self.delete_btn)
         view_layout.addWidget(self.close_btn)
 
         # edit mode layout
@@ -57,6 +61,7 @@ class NoteCard(QWidget):
         # connect signals and slots
         self.edit_btn.clicked.connect(self.set_edit_mode)
         self.close_btn.clicked.connect(self.close)
+        self.delete_btn.clicked.connect(self.delete_note)
         self.save_btn.clicked.connect(self.save_changes)
         self.discard_btn.clicked.connect(self.discard_changes)
 
@@ -96,6 +101,16 @@ class NoteCard(QWidget):
         self.title_input.setText(self.saved_title)
         self.body_input.setText(self.saved_body)
         self.set_view_mode()
+
+    # 4. Delete a note
+    def delete_note(self):
+        db.delete_note(self.note_id)
+
+        # trigger a signal
+        self.note_deleted.emit()
+
+        self.close()
+        
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -78,6 +78,10 @@ class NotebookApp (QWidget):
         self.edit_win.note_edited_saved.connect(self.load_notes)
         self.edit_win.show()
 
+        # usage of a signal when a note is deleted
+        self.edit_win.note_deleted.connect(self.load_notes)
+        
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
