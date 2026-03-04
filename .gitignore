@@ -3,3 +3,6 @@ venv/
 notes.db
 technichal/
 examples/
+build/
+dist/
+main.spec

@@ -3,6 +3,9 @@ Scope: to build a simple Desktop note application, not dependent on browser.
 It needs to be very user-friendly, target audience is early teens.
 No HTML/CSS/JS here.
 
+📦 executable: main.exe
+Download and run - it will create an additional db file in the same folder
+
 ## Building timeline 
 
 ### 1. Setup
