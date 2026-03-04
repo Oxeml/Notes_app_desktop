@@ -2,6 +2,7 @@ import sys
 from PyQt6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QPushButton,
                              QLabel, QScrollArea, QFrame, QGridLayout)
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
 import db
 from card import NoteCard
 from create_note import NewNote
@@ -10,8 +11,9 @@ class NotebookApp (QWidget):
     def __init__(self):
         super().__init__()
         db.init_db()
-        self.setWindowTitle("Minimal Notes")
-        self.resize(450, 600)
+        self.setWindowTitle("My Notes ✌️")
+        self.setWindowIcon(QIcon("./assets/icons/rocket-lunch.png"))
+        self.setFixedSize(450, 600)
 
         self.main_layout = QVBoxLayout(self)
 
@@ -19,6 +21,7 @@ class NotebookApp (QWidget):
         self.greeting = QLabel("Hello! What's on your mind today?")
         self.greeting.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.greeting.setStyleSheet("font-size: 18px; margin: 10px")
+        self.greeting.setObjectName("Greeting") # for styling
 
         self.main_layout.addWidget(self.greeting)
 
@@ -34,11 +37,22 @@ class NotebookApp (QWidget):
         self.scroll_content = QWidget()
         self.scroll_layout = QGridLayout(self.scroll_content)
         self.scroll_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-
+        
+        
         self.scroll.setWidget(self.scroll_content)
         self.main_layout.addWidget(self.scroll)
 
+        # styling link
+        self.load_stylesheet()
+        
         self.load_notes()
+
+    def load_stylesheet(self):
+        try:
+            with open("styles.qss", "r") as f:
+                self.setStyleSheet(f.read())
+        except FileNotFoundError:
+            print("Style file not found!")
 
     def load_notes(self):
         # clear what's already there
@@ -51,8 +65,16 @@ class NotebookApp (QWidget):
         for index, note in enumerate(notes):
             n_id, n_title, n_time = note
 
-            btn = QPushButton(f"{n_title}\n{n_time}")
-            btn.setFixedSize(130, 100)
+            if len(n_title) > 9:
+                display_title = n_title[:9] + ".."
+            else:
+                display_title = n_title
+
+            dispaly_day = n_time[:10]
+            display_time = n_time[11:16] 
+            btn = QPushButton(f"{display_title}\n\n{dispaly_day}\n{display_time}")
+            btn.setObjectName("NoteCardBtn")
+            btn.setFixedSize(130, 130)
             btn.clicked.connect(lambda checked, id=n_id: self.open_existing_note(id))
 
             row = index // columns_count

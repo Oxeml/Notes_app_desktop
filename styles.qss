@@ -1,0 +1,57 @@
+#MainWindow {
+    background-color: #121212;
+    color: #FFFFFF;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+QLabel {
+    font-size: 22px;
+    font-weight: bold;
+    color: #a76eed;
+}
+
+QLabel#Greeting {
+    font-size: 24px;
+    font-weight: bold;
+    color: #938f98; 
+    margin: 20px;
+}
+
+QPushButton {
+    background-color: #04e8d1; 
+    color: #97352d2d;
+    border-radius: 17px;    
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px;
+    margin: 7 px;
+}
+
+QPushButton:hover {
+    background-color: #7ceee9;    
+    border-radius: 22px;
+    font-size: 20px;
+    margin: 0px;
+}
+
+QPushButton#NoteCardBtn {
+    background-color: #e4dde8;
+    color: #494a4e;
+    border: 2px solid #b1c6c4;
+    border-radius: 12px;
+    font-size: 14px;
+    font-style: italic; 
+    line-height: 1.2;
+    padding: 2px;
+    margin: 5px;
+    text-align: center;    
+}
+
+QPushButton#NoteCardBtn:hover {
+    border: 2px solid #8ba4a1;  /* Purple Glow */
+    background-color: #f3f1f4;    
+    border-radius: 17px;
+    margin: 2px;
+}
+
+

@@ -204,3 +204,15 @@ Diff between ```setWidget()``` and ```addWidget()```:
 - ```setWidget()``` - plugs exactly one element to a specific layout (like ScrollArea or QDockWidget), replaces previous container
 
 - ```addWidget()``` - adds element at the end of the list of the elements that are already there
+
+### 3.3. UI and styling
+Used QtSS (Qt StyleSheets) - please see styles.py.
+Without QtSS the app looks nice, just windows style.
+But I wanted to personalise it for my target user - a teen.
+
+QSS doesn't support transitions. Fot btn:hover.
+I can't directly style the main window title (like font).
+But it's possible to add emoji and custom icon.
+
+### Some CSS issues:
+- to put the text nicely in the note card (title and a long timestamp) - 
