@@ -218,4 +218,22 @@ But it's possible to add emoji and custom icon.
 - to put the text nicely in the note card (title and a long timestamp) - I just trimmed it and split the timestamp, I didn't find any elegant way to manage it
 
 ## 4. Converting into the executable
+### 4.1. Helper function in main for the correct path to the assets
+```import sys```
+```import os```
 
+outside the class
+```def resource_path(relative_path):```
+```     if hasattr (sys, '_MEIPASS'):```
+```         return os.path.join(sys._MEIPASS, relative_path)```
+```     return os.path.join(os.path.abspath("."), relative_path)```
+
+bash for building an execurable:
+```pyinstaller --onefile --windowed \```
+```--add-data "styles.qss;." \```
+```--add-data "assets;assets" \```
+```--icon=assets/icons/rocket-lunch.ico \```
+```main.py```
+
+converter from .png to .ico:
+https://cloudconvert.com/png-to-ico
