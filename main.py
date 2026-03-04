@@ -1,4 +1,5 @@
 import sys
+import os
 from PyQt6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QPushButton,
                              QLabel, QScrollArea, QFrame, QGridLayout)
 from PyQt6.QtCore import Qt
@@ -7,12 +8,19 @@ import db
 from card import NoteCard
 from create_note import NewNote
 
+# helper function to convert a relative path into an absolute
+# path, so that when executable is installed neccessary items
+# will be accessed.
+def resource_path(relative_path):
+    if hasattr (sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 class NotebookApp (QWidget):
     def __init__(self):
         super().__init__()
         db.init_db()
         self.setWindowTitle("My Notes ✌️")
-        self.setWindowIcon(QIcon("./assets/icons/rocket-lunch.png"))
+        self.setWindowIcon(QIcon(resource_path("./assets/icons/rocket-lunch.png")))
         self.setFixedSize(450, 600)
 
         self.main_layout = QVBoxLayout(self)
@@ -49,7 +57,7 @@ class NotebookApp (QWidget):
 
     def load_stylesheet(self):
         try:
-            with open("styles.qss", "r") as f:
+            with open(resource_path("styles.qss"), "r") as f:
                 self.setStyleSheet(f.read())
         except FileNotFoundError:
             print("Style file not found!")

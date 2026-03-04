@@ -215,4 +215,7 @@ I can't directly style the main window title (like font).
 But it's possible to add emoji and custom icon.
 
 ### Some CSS issues:
-- to put the text nicely in the note card (title and a long timestamp) - 
+- to put the text nicely in the note card (title and a long timestamp) - I just trimmed it and split the timestamp, I didn't find any elegant way to manage it
+
+## 4. Converting into the executable
+
